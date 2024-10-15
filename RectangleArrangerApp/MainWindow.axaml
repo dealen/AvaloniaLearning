@@ -1,0 +1,17 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="RectangleArrangerApp.MainWindow"
+        Title="RectangleArrangerApp">
+    
+      <Canvas x:Name="WorkingBoard"
+          Width="600" Height="400"
+          Background="LightGray"
+          HorizontalAlignment="Center"
+          VerticalAlignment="Center">
+        <!-- Rectangles will be added here -->
+    </Canvas>
+
+</Window>
