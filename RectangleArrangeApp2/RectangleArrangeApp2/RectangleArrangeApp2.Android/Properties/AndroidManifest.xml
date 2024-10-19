@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+		  android:installLocation="auto" 
+		  package="marcickiewicz.jakub.arrangerofrooms">
 	<uses-permission android:name="android.permission.INTERNET" />
-	<application android:label="RectangleArrangeApp2" android:icon="@drawable/Icon" />
+	<application android:label="Aranger" android:icon="@drawable/Icon" />
 </manifest>

@@ -9,6 +9,7 @@ namespace RectangleArrangeApp2.Android
         Label = "RectangleArrangeApp2.Android",
         Theme = "@style/MyTheme.NoActionBar",
         Icon = "@drawable/icon",
+        ScreenOrientation = ScreenOrientation.Landscape,
         MainLauncher = true,
         ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize | ConfigChanges.UiMode)]
     public class MainActivity : AvaloniaMainActivity<App>

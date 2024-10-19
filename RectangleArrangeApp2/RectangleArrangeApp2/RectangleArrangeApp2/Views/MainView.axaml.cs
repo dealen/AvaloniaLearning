@@ -3,12 +3,15 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Shapes;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
+using Avalonia.Media.Immutable;
 using Avalonia.Threading;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace RectangleArrangeApp2.Views
@@ -19,12 +22,11 @@ namespace RectangleArrangeApp2.Views
         private Rectangle selectedRectangle;
         private Point lastPosition;
 
+
+
         public MainView()
         {
             InitializeComponent();
-
-            AddRectangle(50, 50, 100, 80, Brushes.Blue);
-            AddRectangle(200, 150, 120, 60, Brushes.Green);
         }
 
         public Canvas? Canvas
@@ -51,6 +53,8 @@ namespace RectangleArrangeApp2.Views
                 Fill = fill,
             };
 
+            rect.Name = Guid.NewGuid().ToString();
+
             Canvas.SetLeft(rect, left);
             Canvas.SetTop(rect, top);
 
@@ -67,6 +71,20 @@ namespace RectangleArrangeApp2.Views
                     {
                         Header = "Resize",
                         Command = ReactiveCommand.Create(() => ShowResizeDialog(rect))
+                    },
+                    new MenuItem
+                    {
+                        Header = "Remove",
+                        Command = ReactiveCommand.Create(() => RemoveRectangle(rect))
+                    },
+                    new MenuItem
+                    {
+                        Header = "Rotate 90 degrees",
+                        Command = ReactiveCommand.Create(() =>
+                        {
+                            rect.RenderTransform = new RotateTransform(90);
+                            rect.RenderTransformOrigin = RelativePoint.Center;
+                        })
                     }
                 }
             };
@@ -169,10 +187,57 @@ namespace RectangleArrangeApp2.Views
             //});
         }
 
-        private void AddRectangleButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
+        private async void RemoveRectangle(Rectangle rect)
         {
-            // Add a rectangle with default size and position
-            AddRectangle(50, 50, 100, 80, Brushes.Red);
+            //Rectangle? element = this.FindControl<Rectangle>(rect.Name);
+            //if (element is null)
+            //    return;
+
+            var foundELememnt = rectangles.Find(x => x.Name == rect.Name);
+            if (!(foundELememnt is null))
+            {
+                rectangles.Remove(foundELememnt);
+                Canvas?.Children.Remove(foundELememnt as Control);
+            }
+
+            await Task.CompletedTask;
         }
+
+        public void AddRectangleClick(object sender, RoutedEventArgs args)
+        {
+            if (string.IsNullOrEmpty(txtHeight.Text) || string.IsNullOrEmpty(txtWidth.Text))
+            {
+                MessageBus.Current.SendMessage("Please enter a valid height and width.");
+                return;
+            }
+
+            if (!double.TryParse(txtHeight.Text, out double height) || !double.TryParse(txtWidth.Text, out double width))
+            {
+                MessageBus.Current.SendMessage("Please enter a valid height and width.");
+                return;
+            }
+
+            var color = Brushes.Blue;
+
+            var listOfColors = new List<IImmutableSolidColorBrush>
+            {
+                Brushes.Green,
+                Brushes.Yellow,
+                Brushes.Orange,
+                Brushes.Red,
+                Brushes.Purple,
+                Brushes.BlueViolet,
+                Brushes.Blue,
+                Brushes.Navy,
+                Brushes.Brown,
+                Brushes.Gray,
+                Brushes.Black
+            };
+
+            var random = new Random();
+
+            AddRectangle(50, 50, width, height, listOfColors[random.Next(listOfColors.Count)]);
+        }
+
     }
 }

@@ -3,20 +3,124 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:RectangleArrangeApp2.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="1024" d:DesignHeight="764"
              x:Class="RectangleArrangeApp2.Views.MainView"
              x:DataType="vm:MainViewModel">
-	<Design.DataContext>
-		<!-- This only sets the DataContext for the previewer in an IDE,
-         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-		<vm:MainViewModel />
-	</Design.DataContext>
 
-	<Canvas x:Name="WorkingBoard"
-		Width="800" Height="600"
-		Background="LightGray"
-		HorizontalAlignment="Center"
-		VerticalAlignment="Center">
-		<!-- Rectangles will be added here -->
-	</Canvas>
+	<UserControl.DataContext>
+		<vm:MainViewModel />
+	</UserControl.DataContext>
+	<Grid>
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+
+		<Grid Margin="5" Grid.RowSpan="2">
+
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="Auto"/>
+			</Grid.ColumnDefinitions>
+
+			<Label
+				x:Name="lblWidth"
+				Grid.Row="0"
+				Grid.Column="0"
+				Content="Side A:"
+				HorizontalAlignment="Left"/>
+
+			<TextBox
+				x:Name="txtWidth"
+				Grid.Row="1"
+				Grid.Column="0"/>
+
+			<Label
+				x:Name="lblHeight"
+				Grid.Row="2"
+				Grid.Column="0"
+				Content="Side B:"
+				HorizontalAlignment="Left"/>
+
+			<TextBox
+				x:Name="txtHeight"
+				Grid.Row="3"
+				Grid.Column="0"/>
+
+			<Button
+				x:Name="btnAddRect"
+				Grid.Row="4"
+				Click="AddRectangleClick">
+				Add new rectangle
+			</Button>
+
+			<Label
+				x:Name="lblCanvasWidth"
+				Grid.Row="5"
+				Grid.Column="0"
+				Content="Provide Canvas width:"
+				HorizontalAlignment="Left"/>
+
+			<TextBox
+				x:Name="txtCanvasWidth"
+				Text="{Binding CanvasWidth}"
+				Grid.Row="6"
+				Grid.Column="0"/>
+
+			<Label
+				x:Name="lblCanvasHeight"
+				Grid.Row="7"
+				Grid.Column="0"
+				Content="Provide Canvas height:"
+				HorizontalAlignment="Left"/>
+
+			<TextBox
+				x:Name="txtCanvasHeight"
+				Text="{Binding CanvasHeight}"
+				Grid.Row="8"
+				Grid.Column="0"/>
+
+		</Grid>
+
+		<Viewbox
+			Grid.Row="0"
+			Grid.RowSpan="10"
+			Grid.Column="1"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center">
+			<Canvas
+				x:Name="WorkingBoard"
+				Width="{Binding CanvasWidth}"
+				Height="{Binding CanvasHeight}"
+				Background="LightGray"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Center">
+				<!-- Rectangles will be added here -->
+			</Canvas>
+		</Viewbox>
+
+	</Grid>
+
+
 </UserControl>
